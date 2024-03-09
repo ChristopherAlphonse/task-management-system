@@ -6,7 +6,7 @@ If you have questions about implementation details, help or support, then please
 
 ## Reporting Issues
 
-If you have found what you think is a bug, please [file an issue](https://github.com/task-management-system/issues/new). **PLEASE NOTE:** Issues that are identified as implementation questions or non-issues will be immediately closed and redirected to [Github Discussions](https://github.com/tanstack/table/discussions)
+If you have found what you think is a bug, please [file an issue](https://github.com/task-management-system/issues/new).
 
 ## Suggesting new features
 
