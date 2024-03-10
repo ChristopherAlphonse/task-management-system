@@ -23,7 +23,7 @@ const Navbar = () => {
       <div className="flex items-center gap-3 cursor-pointer">
         <IoPersonOutline size={28} className="text-amber-500" />
         <span className="capitalize text-amber-500/75 font-semibold md:text-lg text-sm whitespace-nowrap">
-          {boardName || "Board Name"}
+          {boardName || "Class 01"}
         </span>
         <IoChevronDownOutline size={16} className="text-amber-500" />
       </div>

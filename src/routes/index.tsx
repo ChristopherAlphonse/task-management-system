@@ -3,20 +3,20 @@ import Layout from "../layout";
 import Boards from "../pages/Boards";
 
 const routes: RouteObject[] = [
-    {
-        path: "/",
-        element: <Layout />,
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
+      {
         children: [
-            {
-                children: [
-                    {
-                        path: "",
-                        element: <Boards />,
-                    },
-                ],
-            },
+          {
+            path: "",
+            element: <Boards />,
+          },
         ],
-    },
+      },
+    ],
+  },
 ];
 
 export default routes;

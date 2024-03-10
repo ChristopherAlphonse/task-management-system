@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { Outlet } from "react-router";
-import Navbar from "../components/Navbar";
 import Sidebar from "../components/SideBar";
+import Navbar from "../components/Navbar";
 
 const Layout = () => {
   return (
