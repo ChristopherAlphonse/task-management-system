@@ -6,7 +6,7 @@ If you have questions about implementation details, help or support, then please
 
 ## Reporting Issues
 
-If you have found what you think is a bug, please [file an issue](https://github.com/ChristopherAlphonse/task-management-system/issues/new) [kanban](https://github.com/users/ChristopherAlphonse/projects/4/views/2).
+If you have found what you think is a bug, please [file an issue](https://github.com/ChristopherAlphonse/task-management-system/issues/new), Track issues [kanban](https://github.com/users/ChristopherAlphonse/projects/4/views/2).
 
 ## Suggesting new features
 
