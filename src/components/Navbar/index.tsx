@@ -44,6 +44,7 @@ const Navbar = () => {
                     <IoSettingsOutline />
                 </div>
                 <div
+                    role="button"
                     className="grid place-items-center bg-gray-100 hover:bg-gray-200 rounded-full p-2 cursor-pointer"
                     onClick={toggleNotification}
                 >
