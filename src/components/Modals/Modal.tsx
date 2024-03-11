@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
 
 import { v4 as uuidv4 } from "uuid";
@@ -10,11 +9,22 @@ interface Tag {
   text: string;
 }
 
+interface columnsData {
+  id: string;
+  title: string;
+  description: string;
+  priority: string;
+  deadline: number;
+  image: string;
+  alt: string;
+  tags: Tag[];
+}
+
 interface AddModalProps {
   isOpen: boolean;
   onClose: () => void;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  handleAddTask: (taskData: any) => void;
+  handleAddTask: (taskData: columnsData) => void;
 }
 
 const AddModal = ({
@@ -23,7 +33,7 @@ const AddModal = ({
   setOpen,
   handleAddTask,
 }: AddModalProps) => {
-  const initialTaskData = {
+  const initialTaskData: columnsData = {
     id: uuidv4(),
     title: "",
     description: "",
@@ -31,10 +41,10 @@ const AddModal = ({
     deadline: 0,
     image: "",
     alt: "",
-    tags: [] as Tag[],
+    tags: [],
   };
 
-  const [taskData, setTaskData] = useState(initialTaskData);
+  const [taskData, setTaskData] = useState<columnsData>(initialTaskData);
   const [tagTitle, setTagTitle] = useState("");
 
   const handleChange = (

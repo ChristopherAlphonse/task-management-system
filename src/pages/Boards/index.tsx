@@ -1,6 +1,7 @@
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useState } from "react";
 
-import { useState } from "react";
 import { IoAddOutline } from "react-icons/io5";
 import AddModal from "../../components/Modals/Modal";
 import Task from "../../components/Task";
@@ -9,9 +10,25 @@ import { boardData } from "../../data/boardData";
 import { Columns } from "../../types";
 
 const Boards = () => {
-  const [columns, setColumns] = useState<Columns>(boardData);
+  const [columns, setColumns] = useState<Columns>({});
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedColumn, setSelectedColumn] = useState("");
+
+  useEffect(() => {
+    const storedData = localStorage.getItem("columnsData");
+    if (storedData) {
+      setColumns(JSON.parse(storedData));
+    } else {
+      setColumns({ ...boardData });
+    }
+  }, []);
+
+  const handleAddTask = (taskData: any) => {
+    const newColumns = { ...columns };
+    newColumns[selectedColumn].items.push(taskData);
+    setColumns(newColumns);
+    localStorage.setItem("columnsData", JSON.stringify(newColumns));
+  };
 
   const openModal = (columnId: any) => {
     setSelectedColumn(columnId);
@@ -20,11 +37,6 @@ const Boards = () => {
 
   const closeModal = () => {
     setModalOpen(false);
-  };
-
-  const handleAddTask = (taskData: any) => {
-    const newBoard = { ...columns };
-    newBoard[selectedColumn].items.push(taskData);
   };
 
   return (

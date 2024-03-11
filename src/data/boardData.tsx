@@ -1,11 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
-import taskImage1 from "../assets/images/task1.jpg";
-import taskImage7 from "../assets/images/task7.jpg";
 import { getColors } from "../components/utils/getColors";
 import { Columns } from "../types";
-
-const now = new Date();
-const oneHourLater = new Date(now.getTime() + 60 * 60 * 1000);
 
 export const boardData: Columns = {
   backlog: {
@@ -13,27 +8,12 @@ export const boardData: Columns = {
     items: [
       {
         id: uuidv4(),
-        title: "Bug Fixing for User Authentication",
-        description:
-          "Identify and resolve issues related to user authentication, including login, registration, and password reset functionalities. ",
-        priority: "medium",
-        deadline: oneHourLater.getTime(),
-        image: taskImage1,
-        alt: "Task 1 image",
-        tags: [
-          { title: "Test", ...getColors() },
-          { title: "Front", ...getColors() },
-        ],
-      },
-
-      {
-        id: uuidv4(),
         title: "UI/UX Refinement for Mobile App",
         description:
           "Conduct a thorough review of the mobile application's user interface and user experience. ",
         priority: "low",
         deadline: 50,
-        image: taskImage7,
+
         alt: "Task 2 image",
         tags: [
           { title: "Test", ...getColors() },
