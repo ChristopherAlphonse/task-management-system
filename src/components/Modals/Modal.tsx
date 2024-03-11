@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { v4 as uuidv4 } from "uuid";
 import { getColors } from "../utils/getColors";
@@ -9,7 +9,7 @@ interface Tag {
   text: string;
 }
 
-interface columnsData {
+interface ColumnsData {
   id: string;
   title: string;
   description: string;
@@ -24,7 +24,7 @@ interface AddModalProps {
   isOpen: boolean;
   onClose: () => void;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  handleAddTask: (taskData: columnsData) => void;
+  handleAddTask: (taskData: ColumnsData) => void;
 }
 
 const AddModal = ({
@@ -33,7 +33,7 @@ const AddModal = ({
   setOpen,
   handleAddTask,
 }: AddModalProps) => {
-  const initialTaskData: columnsData = {
+  const initialTaskData: ColumnsData = {
     id: uuidv4(),
     title: "",
     description: "",
@@ -44,8 +44,27 @@ const AddModal = ({
     tags: [],
   };
 
-  const [taskData, setTaskData] = useState<columnsData>(initialTaskData);
+  const [taskData, setTaskData] = useState<ColumnsData>(initialTaskData);
   const [tagTitle, setTagTitle] = useState("");
+  const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
+  const [submitButtonColor, setSubmitButtonColor] = useState(
+    "bg-gray-400 text-gray-800",
+  );
+
+  useEffect(() => {
+    const isAnyFieldEmpty =
+      taskData.title === "" ||
+      taskData.description === "" ||
+      taskData.priority === "" ||
+      taskData.deadline === 0;
+
+    setIsSubmitDisabled(isAnyFieldEmpty);
+    setSubmitButtonColor(
+      isAnyFieldEmpty
+        ? "bg-gray-400 text-gray-800"
+        : "bg-orange-400 text-blue-50",
+    );
+  }, [taskData]);
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -54,18 +73,6 @@ const AddModal = ({
   ) => {
     const { name, value } = e.target;
     setTaskData({ ...taskData, [name]: value });
-  };
-
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        if (e.target) {
-          setTaskData({ ...taskData, image: e.target.result as string });
-        }
-      };
-      reader.readAsDataURL(e.target.files[0]);
-    }
   };
 
   const handleAddTag = () => {
@@ -98,8 +105,9 @@ const AddModal = ({
         className="w-full h-full bg-black opacity-70 absolute left-0 top-0 z-20"
         onClick={closeModal}
       ></div>
-      <div className="md:w-[30vw] w-[90%] bg-white rounded-lg shadow-md z-50 flex flex-col items-center gap-3 px-5 py-6">
+      <form className="md:w-[30vw] w-[90%] bg-white rounded-lg shadow-md z-50 flex flex-col items-center gap-3 px-5 py-6">
         <input
+          required
           type="text"
           name="title"
           value={taskData.title}
@@ -108,6 +116,7 @@ const AddModal = ({
           className="w-full h-12 px-3 outline-none rounded-md bg-slate-100 border border-slate-300 text-sm font-medium"
         />
         <input
+          required
           type="text"
           name="description"
           value={taskData.description}
@@ -127,6 +136,7 @@ const AddModal = ({
           <option value="high">High</option>
         </select>
         <input
+          required
           type="number"
           name="deadline"
           value={taskData.deadline}
@@ -134,8 +144,10 @@ const AddModal = ({
           placeholder="Deadline"
           className="w-full h-12 px-3 outline-none rounded-md bg-slate-100 border border-slate-300 text-sm"
         />
+        <label htmlFor="tagTitle">Tag Title:</label>
         <input
           type="text"
+          id="tagTitle"
           value={tagTitle}
           onChange={(e) => setTagTitle(e.target.value)}
           placeholder="Tag Title"
@@ -148,7 +160,7 @@ const AddModal = ({
           Add Tag
         </button>
         <div className="w-full">
-          {taskData.tags && <span>Tags:</span>}
+          {taskData.tags.length > 0 && <span>Tags:</span>}
           {taskData.tags.map((tag, index) => (
             <div
               key={index}
@@ -168,20 +180,23 @@ const AddModal = ({
             placeholder="Image Alt"
             className="w-full h-12 px-3 outline-none rounded-md bg-slate-100 border border-slate-300 text-sm"
           />
+          <label htmlFor="image">Image:</label>
           <input
             type="file"
+            id="image"
             name="image"
-            onChange={handleImageChange}
+            onChange={handleChange}
             className="w-full"
           />
         </div>
         <button
-          className="w-full mt-3 rounded-md h-9 bg-orange-400 text-blue-50 font-medium"
+          className={`w-full mt-3 rounded-md h-9 font-medium ${submitButtonColor}`}
           onClick={handleSubmit}
+          disabled={isSubmitDisabled}
         >
           Submit Task
         </button>
-      </div>
+      </form>
     </div>
   );
 };
