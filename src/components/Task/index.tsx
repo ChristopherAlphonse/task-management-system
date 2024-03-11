@@ -1,13 +1,17 @@
+import React from "react";
 import { IoTimeOutline } from "react-icons/io5";
 import { TaskT } from "../../types";
-/* eslint-disable @typescript-eslint/no-explicit-any */
 
 interface TaskProps {
   task: TaskT;
-  provided: any;
+  provided: {
+    innerRef: React.RefObject<HTMLDivElement>;
+    draggableProps: React.HTMLAttributes<HTMLDivElement>;
+    dragHandleProps: React.HTMLAttributes<HTMLDivElement>;
+  };
 }
 
-const Task = ({ task, provided }: TaskProps) => {
+const Task: React.FC<TaskProps> = ({ task, provided }) => {
   const { title, description, priority, deadline, image, alt, tags } = task;
 
   return (
@@ -15,7 +19,7 @@ const Task = ({ task, provided }: TaskProps) => {
       ref={provided.innerRef}
       {...provided.draggableProps}
       {...provided.dragHandleProps}
-      className="w-full cursor-grab bg-[#fff] flex flex-col justify-between gap-3 items-start shadow-sm rounded-xl px-3 py-4"
+      className="w-full cursor-grab bg-slate-50 flex flex-col justify-between gap-3 items-start shadow-sm rounded-xl px-3 py-4 "
     >
       {image && alt && (
         <img src={image} alt={alt} className="w-full h-[170px] rounded-lg" />
@@ -32,14 +36,14 @@ const Task = ({ task, provided }: TaskProps) => {
         ))}
       </div>
       <div className="w-full flex items-start flex-col gap-0">
-        <span className="text-[15.5px] font-medium text-[#555]">{title}</span>
+        <span className="text-[15.5px] font-medium text-zinc-500">{title}</span>
         <span className="text-[13.5px] text-gray-500">{description}</span>
       </div>
       <div className="w-full border border-dashed"></div>
       <div className="w-full flex items-center justify-between">
         <div className="flex items-center gap-1">
           <IoTimeOutline color={"#666"} width="19px" height="19px" />
-          <span className="text-[13px] text-gray-700">{deadline} mins</span>
+          <span className="text-[13px] text-gray-700">{deadline} ms</span>
         </div>
         <div
           className={`w-[60px] rounded-full h-[5px] ${

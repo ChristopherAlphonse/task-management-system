@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
 import { useState } from "react";
@@ -9,7 +8,7 @@ import { onDragEnd } from "../../components/utils/onDragEnd";
 import { boardData } from "../../data/boardData";
 import { Columns } from "../../types";
 
-const Home = () => {
+const Boards = () => {
   const [columns, setColumns] = useState<Columns>(boardData);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedColumn, setSelectedColumn] = useState("");
@@ -33,13 +32,10 @@ const Home = () => {
       <DragDropContext
         onDragEnd={(result: any) => onDragEnd(result, columns, setColumns)}
       >
-        <div className="w-full   flex flex-wrap items-start justify-between px-5 pb-8 lg:gap-0 gap-5 ">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 px-5 pb-8">
           {Object.entries(columns).map(([columnId, column]: any) => (
-            <div
-              className="w-full xl:w-1/6 lg:w-1/4 md:w-1/3 flex flex-col gap-4 mt-9 mr-1 "
-              key={columnId}
-            >
-              <div className="w-full bg-slate-200 rounded-lg shadow-sm text-zinc-600 font-medium text-lg p-3 items-center flex justify-center uppercase tracking-widest">
+            <div className="flex flex-col gap-4 mt-9" key={columnId}>
+              <div className="bg-slate-200 rounded-lg shadow-sm text-zinc-600 font-medium text-lg p-3 text-center uppercase tracking-widest">
                 {column.name}
               </div>
               <Droppable droppableId={columnId} key={columnId}>
@@ -47,7 +43,7 @@ const Home = () => {
                   <div
                     ref={provided.innerRef}
                     {...provided.droppableProps}
-                    className="flex flex-col gap-4 items-center py-5 px-4 bg-gray-100 rounded-lg shadow-md mx-2"
+                    className="flex flex-col gap-4 items-center py-2 px-2 bg-slate-200 rounded-lg shadow-md"
                   >
                     {column.items.map((task: any, index: any) => (
                       <Draggable
@@ -64,13 +60,13 @@ const Home = () => {
                   </div>
                 )}
               </Droppable>
-              <div
+              <button
                 onClick={() => openModal(columnId)}
-                className="w-full flex items-center justify-center py-3 bg-amber-500 text-white rounded-lg cursor-pointer hover:bg-amber-600 mt-0 transition duration-300 ease-in-out"
+                className="flex items-center justify-center py-3 bg-amber-500 text-white rounded-lg cursor-pointer hover:bg-amber-600 transition duration-300 ease-in-out"
               >
                 <IoAddOutline size={20} className="mr-2" />
                 Add Task
-              </div>
+              </button>
             </div>
           ))}
         </div>
@@ -86,4 +82,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Boards;
