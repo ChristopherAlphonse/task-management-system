@@ -1,6 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import "./index.css";
-
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import React, { Suspense, useEffect, useState } from "react";
 
 import ReactDOM from "react-dom";
@@ -24,6 +25,8 @@ function Root() {
 
     return (
         <BrowserRouter>
+          <SpeedInsights />
+                    <Analytics />
             <StyleSheetManager shouldForwardProp={(prop) => prop !== "shake"}>
                 <Suspense fallback={<LoadingComponent />}>
                     {isLoading ? <LoadingComponent /> : <LazyApp />}
