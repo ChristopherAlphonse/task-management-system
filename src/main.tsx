@@ -1,8 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import "./index.css";
-import { Analytics } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/next";
-import React, { Suspense, useEffect, useState } from "react";
+
+import React, { StrictMode, Suspense, useEffect, useState } from "react";
 
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
@@ -13,27 +12,27 @@ import LoadingComponent from "./components/Loading";
 const LazyApp = React.lazy(() => import("./App"));
 
 function Root() {
-    const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        const timeout = setTimeout(() => {
-            setIsLoading(false);
-        }, 2500);
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setIsLoading(false);
+    }, 2500);
 
-        return () => clearTimeout(timeout);
-    }, []);
+    return () => clearTimeout(timeout);
+  }, []);
 
-    return (
-        <BrowserRouter>
-          <SpeedInsights />
-                    <Analytics />
-            <StyleSheetManager shouldForwardProp={(prop) => prop !== "shake"}>
-                <Suspense fallback={<LoadingComponent />}>
-                    {isLoading ? <LoadingComponent /> : <LazyApp />}
-                </Suspense>
-            </StyleSheetManager>
-        </BrowserRouter>
-    );
+  return (
+    <StrictMode>
+      <BrowserRouter>
+        <StyleSheetManager shouldForwardProp={(prop) => prop !== "shake"}>
+          <Suspense fallback={<LoadingComponent />}>
+            {isLoading ? <LoadingComponent /> : <LazyApp />}
+          </Suspense>
+        </StyleSheetManager>
+      </BrowserRouter>
+    </StrictMode>
+  );
 }
 
 ReactDOM.render(<Root />, document.getElementById("root"));

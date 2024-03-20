@@ -1,17 +1,17 @@
-import Navbar from "../components/Navbar";
-import { Outlet } from "react-router";
-import Sidebar from "../components/SideBar";
 import { Suspense } from "react";
+import { Outlet } from "react-router";
+import Navbar from "../components/Navbar";
+import Sidebar from "../components/SideBar";
 
 const Layout = () => {
   return (
-    <div>
+    <div className="flex h-screen overflow-hidden">
       <Suspense fallback={<div>Loading...</div>}>
         <Navbar />
         <Sidebar />
       </Suspense>
       <Suspense fallback={<div>Loading...</div>}>
-        <div className="md:pl-[250px] pl-[60px] pr-[20px] pt-[70px] w-full overflow-y-auto">
+        <div className="md:pl-60 md:pr-20 pl-20 pr-4 pt-16 w-full overflow-y-auto">
           <Outlet />
         </div>
       </Suspense>

@@ -20,11 +20,14 @@ dependencies:
   install:
     specifier: ^0.13.0
     version: 0.13.0
+  next:
+    specifier: link:@vercel/speed-insights/next
+    version: link:@vercel/speed-insights/next
   postcss:
     specifier: ^8.4.37
     version: 8.4.37
   react:
-    specifier: ^18.2.0
+    specifier: link:@vercel/analytics/react
     version: 18.2.0
   react-beautiful-dnd:
     specifier: ^13.1.1
